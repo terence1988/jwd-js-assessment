@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
     {
       q: 'Where is Hunter Valley Gardens in New South Wales?',
       o: ['Abermain', 'Wallsend', 'Pokolbin', 'Redhead'],
-      a: 3,
+      a: 2,
     },
     {
       q: 'Which is the biggest stadium in Sydney area?',
@@ -98,9 +98,13 @@ window.addEventListener('DOMContentLoaded', () => {
         if (radioElement.checked) {
           // code for task 1 goes here
           radioElement.parentElement.style.backgroundColor = '#ccba50';
-          if (quizItem.a == i) {
+          if (quizItem.a === i) {
             score++;
           }
+          if (quizItem.a !== i) {
+            radioElement.parentElement.innerHTML += `&nbsp&nbsp&nbsp&nbsp<em>Your answer<em>`; //&nbsp non-breaking/space white space in HTML
+          }
+          radioElement.checked = false;
         }
       }
     });
