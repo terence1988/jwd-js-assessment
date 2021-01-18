@@ -24,6 +24,10 @@ window.addEventListener('DOMContentLoaded', () => {
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
+    countDown(5, function () {
+      calculateScore();
+      btnSubmit.style.display = 'none';
+    });
   });
   // quizArray QUESTIONS & ANSWERS
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
@@ -43,6 +47,16 @@ window.addEventListener('DOMContentLoaded', () => {
       q: 'What is the capital of Australia',
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
+    },
+    {
+      q: 'Where is Hunter Valley Gardens in New South Wales?',
+      o: ['Abermain', 'Wallsend', 'Pokolbin', 'Redhead'],
+      a: 3,
+    },
+    {
+      q: 'Which is the biggest stadium in Sydney area?',
+      o: ['ANZ Stadium', 'Sydney Cricket Ground', 'Bankwest Stadium', 'Henson Park'],
+      a: 0,
     },
   ];
 
@@ -76,15 +90,45 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = '#50c5cc';
+        } else {
+          const answerElement = document.querySelector('#' + `li_${index}_${quizItem.a}`);
+          answerElement.style.backgroundColor = '#50c5cc';
         }
-
         if (radioElement.checked) {
           // code for task 1 goes here
+          radioElement.parentElement.style.backgroundColor = '#ccba50';
+          if (quizItem.a == i) {
+            score++;
+          }
         }
       }
     });
+    const scoreDisplay = document.querySelector('#score');
+    scoreDisplay.innerHTML =
+      score === 0
+        ? `Unfortunately, you got <strong>${score}</strong> correct answer.`
+        : score === 1
+        ? `Congratulations, you have answered <strong>${score}</strong> question correctly!`
+        : `Congratulations, you have answered <strong>${score}</strong> questions correctly!`;
   };
+  //The timer
+  function countDown(seconds, callback) {
+    callback = callback || function () {};
+    const timer = setInterval(function () {
+      document.getElementById('time').innerHTML = '00: ' + (seconds >= 10 ? seconds : '0' + seconds);
+      seconds-- || (clearInterval(timer), callback());
+    }, 1000);
+  }
 
   // call the displayQuiz function
-  displayQuiz();
+  displayQuiz(); //All elements exist after render()
+
+  const btnSubmit = document.querySelector('#btnSubmit');
+  btnSubmit.addEventListener('click', () => {
+    calculateScore();
+    btnSubmit.style.display = 'none';
+  });
+  const btnReset = document.querySelector('#btnReset');
+  btnReset.addEventListener('click', () => (window.location.href = './index.html'));
 });
