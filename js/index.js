@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
-    countDown(5, function () {
+    countDown(59, function () {
       calculateScore();
       btnSubmit.style.display = 'none';
     });
@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ? `Congratulations, you have answered <strong>${score}</strong> question correctly!`
         : `Congratulations, you have answered <strong>${score}</strong> questions correctly!`;
   };
-  //The timer
+  //The timer from stackoverflow
   function countDown(seconds, callback) {
     callback = callback || function () {};
     const timer = setInterval(function () {
